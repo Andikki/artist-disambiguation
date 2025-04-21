@@ -39,25 +39,32 @@
 <body>
     <h1>Generate disambiguation artist image</h1>
     <textarea id="textInput" placeholder="Artist name"></textarea>
-    <input type="number" id="fontSizeInput" placeholder="Font size" value="72" min="10" max="200" />
+    <input type="number" id="fontSizeInput" placeholder="Font size" />
     <button onclick="download()">Download PNG</button>
     <canvas id="canvas" width="400" height="400"></canvas>
 
     <script>
+        const defaultFontSize = 128;
+        const disambiguationFontSize = 36;
+        const canvasSize = 440;
+
+        document.getElementById("fontSizeInput").value = defaultFontSize;
+
         const canvas = document.getElementById("canvas");
+        canvas.width = canvasSize;
+        canvas.height = canvasSize;
         const ctx = canvas.getContext("2d");
         let debounceTimeout;
 
         function generate() {
             const text = document.getElementById("textInput").value.trim();
-            const fontSize = parseInt(document.getElementById("fontSizeInput").value, 10) || 72;
-            const disambiguationFontSize = 36;
+            const fontSize = parseInt(document.getElementById("fontSizeInput").value, 10) || defaultFontSize;
             const lines = text.split(/\r?\n/);
 
             // Clear canvas
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Background (optional)
+            // Background
             ctx.fillStyle = "#fff";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
